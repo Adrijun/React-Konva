@@ -3,7 +3,7 @@ import useImage from 'use-image';
 import { parts } from '../constants/Parts';
 import { connectSkeleton } from '../constants/PersonSkeleton';
 import React from 'react';
-const construction_site = './image/construction_siteAnonym.jpeg';
+const construction_site = './image/construction_siteAnonym.JPEG';
 
 export function Skeleton() {
   const [image] = useImage(construction_site); // Bild
