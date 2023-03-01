@@ -12,7 +12,7 @@ export function PersonSkeleton() {
   const blue = 'rgb(12,123,241)';
   const orange = 'rgb(250,152,58)';
   const purple = 'rgb(104,47,100)';
-  console.log(parts);
+  console.log();
   return (
     <>
       <Stage height={window.innerHeight} width={window.innerWidth}>
@@ -23,61 +23,33 @@ export function PersonSkeleton() {
             height={window.innerHeight}
             width={window.innerWidth}
           />
-          {dangerZones.map(dangerZone =>
-            dangerZone.map(dangerZoneCoordinates => {
-              const x = dangerZoneCoordinates[0] * window.innerWidth;
-              const y = dangerZoneCoordinates[1] * window.innerHeight;
-              const x1 = dangerZoneCoordinates[2] * window.innerHeight;
-              const y1 = dangerZoneCoordinates[3] * window.innerHeight;
-              const x2 = dangerZoneCoordinates[4] * window.innerHeight;
-              const y2 = dangerZoneCoordinates[5] * window.innerHeight;
-              const x3 = dangerZoneCoordinates[6] * window.innerHeight;
-              const y3 = dangerZoneCoordinates[7] * window.innerHeight;
-              const x4 = dangerZoneCoordinates[8] * window.innerHeight;
-              const y4 = dangerZoneCoordinates[9] * window.innerHeight;
-              const x5 = dangerZoneCoordinates[10] * window.innerHeight;
-              const y5 = dangerZoneCoordinates[11] * window.innerHeight;
-              const x6 = dangerZoneCoordinates[12] * window.innerHeight;
-              const y6 = dangerZoneCoordinates[13] * window.innerHeight;
-              console.log(dangerZoneCoordinates, 'dangerzonecoo');
+          {dangerZones.map(dangerZone => {
+            return dangerZone.map(dangerZoneCoordinates => {
+              return dangerZoneCoordinates.map(coordinates => {
+                const x = coordinates[0] * window.innerHeight;
+                const y = coordinates[1] * window.innerWidth;
+                console.log(x, 'X', y, 'Y');
 
-              return (
-                <>
-                  <Circle x={x} y={y} radius={5} fill="yellow" />
-                  <Circle x={x1} y={y1} radius={5} fill="yellow" />
-                  <Circle x={x2} y={y2} radius={5} fill="yellow" />
-                  <Circle x={x3} y={y3} radius={5} fill="yellow" />
-                  <Circle x={x4} y={y4} radius={5} fill="yellow" />
-                  <Circle x={x5} y={y5} radius={5} fill="yellow" />
-                  <Circle x={x6} y={y6} radius={5} fill="yellow" />
-
-                  <Line
-                    points={[
-                      x,
-                      y,
-                      x1,
-                      y1,
-                      x2,
-                      y2,
-                      x3,
-                      y3,
-                      x4,
-                      y4,
-                      x5,
-                      y5,
-                      x6,
-                      y6,
-                    ]}
-                    strokeWidth={2}
-                    stroke="yellow"
-                    // closed
-                  ></Line>
-                </>
-              );
-            })
-          )}
+                return (
+                  <>
+                    {
+                      <>
+                        <Line
+                          x={x}
+                          y={y}
+                          points={[x, y]}
+                          strokeWidth={4}
+                          stroke="Magenta"
+                        />
+                        <Circle x={x} y={y} radius={4} fill="blue" />
+                      </>
+                    }
+                  </>
+                );
+              });
+            });
+          })}
         </Layer>
-
         {parts.map(part => {
           const connectSkeleton = [
             {
