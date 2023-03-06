@@ -1,4 +1,4 @@
-export const dangerZones = [
+export const dangerZonesCoordinates = [
   [
     [
       [0.11215403811252268, 0.6375608484005564],

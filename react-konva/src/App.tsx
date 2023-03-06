@@ -1,12 +1,10 @@
 import React from 'react';
-
 import './App.css';
-import { Skeleton } from './components/Skeleton';
-
+import { StageRender } from './components/StageRender';
 function App() {
   return (
     <div className="App">
-      <Skeleton />
+      <StageRender />
     </div>
   );
 }
