@@ -1,25 +1,37 @@
-import { Key } from 'react';
+import { FC, Key } from 'react';
 import { Circle, Layer, Line } from 'react-konva';
-import { parts } from '../constants/Parts';
-
-export const PersonSkeletonRender = () => {
+import { IKeypoints } from '../Models/IKeypoints';
+interface Props {
+  keypoints: Array<IKeypoints>;
+}
+export const PersonSkeletonRender: FC<Props> = ({ keypoints }) => {
   const green = 'rgb(17,244,8)';
   const blue = 'rgb(12,123,241)';
   const orange = 'rgb(250,152,58)';
   const purple = 'rgb(104,47,100)';
 
+  let x10: number = 0.61407470703125;
+  let y10: number = 0.580078125;
+  let x20: number = 0.82342529296875;
+  let y20: number = 1.0032552480697632;
+  // function getSquare() {
+  //   let xo = x y
+  //   let xoo = x1,y1
+  //   return xo * xoo ;
+  // }
+
   return (
     <>
-      {parts.map(part => {
+      {keypoints.map((part: IKeypoints) => {
         const connectSkeleton = [
           {
             name: 'right_ankle-right_knee',
             coordinates: [
               {
-                x: part[15].x,
-                y: part[15].y,
-                x1: part[13].x,
-                y1: part[13].y,
+                x: part.right_ankle[0],
+                y: part.right_ankle[1],
+                x1: part.right_knee[0],
+                y1: part.right_knee[1],
                 colorDotOne: blue,
                 colorDotTwo: blue,
                 colorSkeletonLines: blue,
@@ -30,10 +42,10 @@ export const PersonSkeletonRender = () => {
             name: 'right_knee-right_hip',
             coordinates: [
               {
-                x: part[13].x,
-                y: part[13].y,
-                x1: part[11].x,
-                y1: part[11].y,
+                x: part.right_knee[0],
+                y: part.right_knee[1],
+                x1: part.right_hip[0],
+                y1: part.right_hip[1],
                 colorDotOne: blue,
                 colorDotTwo: blue,
                 colorSkeletonLines: blue,
@@ -44,10 +56,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_ankle-left_knee',
             coordinates: [
               {
-                x: part[16].x,
-                y: part[16].y,
-                x1: part[14].x,
-                y1: part[14].y,
+                x: part.left_ankle[0],
+                y: part.left_ankle[1],
+                x1: part.left_knee[0],
+                y1: part.left_knee[1],
                 colorDotOne: blue,
                 colorDotTwo: blue,
                 colorSkeletonLines: blue,
@@ -58,10 +70,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_knee-left_hip',
             coordinates: [
               {
-                x: part[14].x,
-                y: part[14].y,
-                x1: part[12].x,
-                y1: part[12].y,
+                x: part.left_knee[0],
+                y: part.left_knee[1],
+                x1: part.left_hip[0],
+                y1: part.left_hip[1],
                 colorDotOne: blue,
                 colorDotTwo: blue,
                 colorSkeletonLines: blue,
@@ -73,10 +85,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_hip-right_hip',
             coordinates: [
               {
-                x: part[11].x,
-                y: part[11].y,
-                x1: part[12].x,
-                y1: part[12].y,
+                x: part.left_hip[0],
+                y: part.left_hip[1],
+                x1: part.right_hip[0],
+                y1: part.right_hip[1],
                 colorDotOne: blue,
                 colorDotTwo: blue,
                 colorSkeletonLines: purple,
@@ -87,10 +99,10 @@ export const PersonSkeletonRender = () => {
             name: 'right_shoulder-right_hip',
             coordinates: [
               {
-                x: part[5].x,
-                y: part[5].y,
-                x1: part[11].x,
-                y1: part[11].y,
+                x: part.right_shoulder[0],
+                y: part.right_shoulder[1],
+                x1: part.right_hip[0],
+                y1: part.right_hip[1],
                 colorDotOne: blue,
                 colorDotTwo: blue,
                 colorSkeletonLines: purple,
@@ -101,10 +113,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_shoulder-left_hip',
             coordinates: [
               {
-                x: part[6].x,
-                y: part[6].y,
-                x1: part[12].x,
-                y1: part[12].y,
+                x: part.left_shoulder[0],
+                y: part.left_shoulder[1],
+                x1: part.left_hip[0],
+                y1: part.left_hip[1],
                 colorDotOne: blue,
                 colorDotTwo: blue,
                 colorSkeletonLines: purple,
@@ -115,10 +127,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_shoulder-right_shoulder',
             coordinates: [
               {
-                x: part[5].x,
-                y: part[5].y,
-                x1: part[6].x,
-                y1: part[6].y,
+                x: part.left_shoulder[0],
+                y: part.left_shoulder[1],
+                x1: part.right_shoulder[0],
+                y1: part.right_shoulder[1],
                 colorDotOne: orange,
                 colorDotTwo: orange,
                 colorSkeletonLines: orange,
@@ -130,10 +142,10 @@ export const PersonSkeletonRender = () => {
             name: 'right_shoulder-right_elbow',
             coordinates: [
               {
-                x: part[5].x,
-                y: part[5].y,
-                x1: part[7].x,
-                y1: part[7].y,
+                x: part.right_shoulder[0],
+                y: part.right_shoulder[1],
+                x1: part.right_elbow[0],
+                y1: part.right_elbow[1],
                 colorDotOne: orange,
                 colorDotTwo: orange,
                 colorSkeletonLines: orange,
@@ -145,10 +157,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_shoulder-left_elbow',
             coordinates: [
               {
-                x: part[6].x,
-                y: part[6].y,
-                x1: part[8].x,
-                y1: part[8].y,
+                x: part.left_shoulder[0],
+                y: part.left_shoulder[1],
+                x1: part.left_elbow[0],
+                y1: part.left_elbow[1],
                 colorDotOne: orange,
                 colorDotTwo: orange,
                 colorSkeletonLines: orange,
@@ -159,10 +171,10 @@ export const PersonSkeletonRender = () => {
             name: 'right_elbow-right_wrist',
             coordinates: [
               {
-                x: part[7].x,
-                y: part[7].y,
-                x1: part[9].x,
-                y1: part[9].y,
+                x: part.right_elbow[0],
+                y: part.right_elbow[1],
+                x1: part.right_wrist[0],
+                y1: part.right_wrist[1],
                 colorDotOne: orange,
                 colorDotTwo: orange,
                 colorSkeletonLines: orange,
@@ -174,10 +186,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_elbow-left_wrist',
             coordinates: [
               {
-                x: part[8].x,
-                y: part[8].y,
-                x1: part[10].x,
-                y1: part[10].y,
+                x: part.left_elbow[0],
+                y: part.left_elbow[1],
+                x1: part.left_wrist[0],
+                y1: part.left_wrist[1],
                 colorDotOne: orange,
                 colorDotTwo: orange,
                 colorSkeletonLines: orange,
@@ -189,10 +201,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_eye-right_eye',
             coordinates: [
               {
-                x: part[1].x,
-                y: part[1].y,
-                x1: part[2].x,
-                y1: part[2].y,
+                x: part.left_eye[0],
+                y: part.left_eye[1],
+                x1: part.right_eye[0],
+                y1: part.right_eye[1],
                 colorDotOne: green,
                 colorDotTwo: green,
                 colorSkeletonLines: green,
@@ -204,10 +216,10 @@ export const PersonSkeletonRender = () => {
             name: 'nose-left_eye',
             coordinates: [
               {
-                x: part[0].x,
-                y: part[0].y,
-                x1: part[1].x,
-                y1: part[1].y,
+                x: part.nose[0],
+                y: part.nose[1],
+                x1: part.left_eye[0],
+                y1: part.left_eye[1],
                 colorDotOne: green,
                 colorDotTwo: green,
                 colorSkeletonLines: green,
@@ -219,10 +231,10 @@ export const PersonSkeletonRender = () => {
             name: 'nose-right_eye',
             coordinates: [
               {
-                x: part[0].x,
-                y: part[0].y,
-                x1: part[2].x,
-                y1: part[2].y,
+                x: part.nose[0],
+                y: part.nose[1],
+                x1: part.right_eye[0],
+                y1: part.right_eye[1],
                 colorDotOne: green,
                 colorDotTwo: green,
                 colorSkeletonLines: green,
@@ -233,10 +245,10 @@ export const PersonSkeletonRender = () => {
             name: 'right_eye-right_ear',
             coordinates: [
               {
-                x: part[1].x,
-                y: part[1].y,
-                x1: part[3].x,
-                y1: part[3].y,
+                x: part.right_eye[0],
+                y: part.right_eye[1],
+                x1: part.right_ear[0],
+                y1: part.right_ear[1],
                 colorDotOne: green,
                 colorDotTwo: green,
                 colorSkeletonLines: green,
@@ -247,10 +259,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_eye-left_ear',
             coordinates: [
               {
-                x: part[2].x,
-                y: part[2].y,
-                x1: part[4].x,
-                y1: part[4].y,
+                x: part.left_eye[0],
+                y: part.left_eye[1],
+                x1: part.left_ear[0],
+                y1: part.left_ear[1],
                 colorDotOne: green,
                 colorDotTwo: green,
                 colorSkeletonLines: green,
@@ -261,10 +273,10 @@ export const PersonSkeletonRender = () => {
             name: 'right_ear-right_shoulder',
             coordinates: [
               {
-                x: part[3].x,
-                y: part[3].y,
-                x1: part[5].x,
-                y1: part[5].y,
+                x: part.right_ear[0],
+                y: part.right_ear[1],
+                x1: part.right_shoulder[0],
+                y1: part.right_shoulder[1],
                 colorDotOne: green,
                 colorDotTwo: orange,
                 colorSkeletonLines: green,
@@ -275,10 +287,10 @@ export const PersonSkeletonRender = () => {
             name: 'left_ear-left_shoulder',
             coordinates: [
               {
-                x: part[4].x,
-                y: part[4].y,
-                x1: part[6].x,
-                y1: part[6].y,
+                x: part.left_ear[0],
+                y: part.left_ear[1],
+                x1: part.left_shoulder[0],
+                y1: part.left_shoulder[1],
                 colorDotOne: green,
                 colorDotTwo: orange,
                 colorSkeletonLines: green,
@@ -324,6 +336,26 @@ export const PersonSkeletonRender = () => {
                             strokeWidth={2}
                             stroke={coordinate.colorSkeletonLines}
                           />
+
+                          <Line
+                            points={[
+                              window.innerWidth * x10,
+                              window.innerHeight * y10,
+                              window.innerWidth * x20,
+                              window.innerHeight * y10,
+                              window.innerWidth * x20,
+                              window.innerHeight * y20,
+                              window.innerWidth * x10,
+                              window.innerHeight * y20,
+                            ]}
+                            strokeWidth={2}
+                            stroke="rgb(71,149,77)"
+                            closed
+                            shadowBlur={0.2}
+                            shadowColor="rgb(71,149,77)"
+                            fill="rgba(71,149,77,0.009)"
+                          />
+
                           <Circle
                             x={x}
                             y={y}
