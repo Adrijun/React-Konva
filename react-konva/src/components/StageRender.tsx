@@ -1,4 +1,4 @@
-import { Image, Layer, Stage } from 'react-konva';
+import { Image, Layer, Stage, Group } from 'react-konva';
 import useImage from 'use-image';
 import { DangerZoneRender } from './DangerZoneRender';
 import { PersonSkeletonRender } from './PersonSkeletonRender';
@@ -44,11 +44,13 @@ export function StageRender() {
     <>
       <Stage height={window.innerHeight} width={window.innerWidth}>
         <Layer>
-          <Image
-            image={image}
-            height={window.innerHeight}
-            width={window.innerWidth}
-          />
+          <Group>
+            <Image
+              image={image}
+              height={window.innerHeight}
+              width={window.innerWidth}
+            />
+          </Group>
           {dangerZoneData && (
             <DangerZoneRender dangerZonesCoordinatesOne={dangerZoneData} />
           )}

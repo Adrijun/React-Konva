@@ -1,13 +1,1 @@
-Line {
-  border: 2px solid black;
-  cursor: pointer;
-}
 
-#dangerzones {
-  cursor: pointer;
-  :hover + #dangerzoneLabel {
-    background-color: yellow;
-    border: 1px solid black;
-    display: block;
-  }
-}

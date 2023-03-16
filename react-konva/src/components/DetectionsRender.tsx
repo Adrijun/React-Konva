@@ -17,10 +17,14 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
       {detections.map((detectionsArrays: any[]) => {
         // flattened  points are  not normalized coordinates
         return detectionsArrays.map(detectionZone => {
+          const detectionLabel = detectionZone[5];
+          console.log(detectionLabel, 'detectionLabel');
+
           const flattenedPoints = detectionZone.reduce(
             (a: string | any[], b: any) => a.concat(b),
             []
           );
+          // Label for detection
 
           //flattened points are multiplited width height and width to be normalized
           const detectionPoints = flattenedPoints.map(
@@ -37,6 +41,13 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
               {
                 <>
                   <Layer>
+                    <Text
+                      x={detectionPoints[0]}
+                      y={detectionPoints[1] - 20}
+                      text={detectionLabel}
+                      fontSize={20}
+                      stroke="rgb(30,234,8)"
+                    />
                     <Line
                       points={[
                         detectionPoints[0],
