@@ -4,8 +4,9 @@ import { DangerZoneRender } from './DangerZoneRender';
 import { PersonSkeletonRender } from './PersonSkeletonRender';
 import { useEffect, useState } from 'react';
 import { IKeypoints } from '../Models/IKeypoints';
-import { getKeypoints } from '../apis/apirequest';
+import { getDetections, getKeypoints } from '../apis/apirequest';
 import { getDangerZoneCoordinates } from '../apis/apirequest';
+import { DetectionsRender } from './DetectionsRender';
 const construction_site = './image/anonym2.jpg';
 
 // Useeffect för api
@@ -14,12 +15,11 @@ export function StageRender() {
   const [image] = useImage(construction_site);
   const [data, setData] = useState<Array<IKeypoints>>();
   const [dangerZoneData, setDangerZoneData] = useState();
-
+  const [detectionData, setDetectionData] = useState();
   useEffect(() => {
     const subscribe = async () => {
       const allKeypoints = await getKeypoints();
       setData(allKeypoints.data);
-      console.log(allKeypoints, 'data');
     };
     subscribe();
   }, []);
@@ -28,9 +28,16 @@ export function StageRender() {
     const runDangerZone = async () => {
       const allDangerZoneCoordinates = await getDangerZoneCoordinates();
       setDangerZoneData(allDangerZoneCoordinates.data);
-      console.log(allDangerZoneCoordinates, 'allDangerZoneCoordinates');
     };
     runDangerZone();
+  }, []);
+
+  useEffect(() => {
+    const runDetection = async () => {
+      const allDetections = await getDetections();
+      setDetectionData(allDetections.data);
+    };
+    runDetection();
   }, []);
 
   return (
@@ -42,12 +49,12 @@ export function StageRender() {
             height={window.innerHeight}
             width={window.innerWidth}
           />
-
           {dangerZoneData && (
             <DangerZoneRender dangerZonesCoordinatesOne={dangerZoneData} />
           )}
         </Layer>
         {data && <PersonSkeletonRender keypoints={data} />}
+        {detectionData && <DetectionsRender detections={detectionData} />}
       </Stage>
     </>
   );

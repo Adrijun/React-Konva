@@ -10,16 +10,6 @@ export const PersonSkeletonRender: FC<Props> = ({ keypoints }) => {
   const orange = 'rgb(250,152,58)';
   const purple = 'rgb(104,47,100)';
 
-  let x10: number = 0.61407470703125;
-  let y10: number = 0.580078125;
-  let x20: number = 0.82342529296875;
-  let y20: number = 1.0032552480697632;
-  // function getSquare() {
-  //   let xo = x y
-  //   let xoo = x1,y1
-  //   return xo * xoo ;
-  // }
-
   return (
     <>
       {keypoints.map((part: IKeypoints) => {
@@ -335,25 +325,6 @@ export const PersonSkeletonRender: FC<Props> = ({ keypoints }) => {
                             points={[x, y, x1, y1]}
                             strokeWidth={2}
                             stroke={coordinate.colorSkeletonLines}
-                          />
-
-                          <Line
-                            points={[
-                              window.innerWidth * x10,
-                              window.innerHeight * y10,
-                              window.innerWidth * x20,
-                              window.innerHeight * y10,
-                              window.innerWidth * x20,
-                              window.innerHeight * y20,
-                              window.innerWidth * x10,
-                              window.innerHeight * y20,
-                            ]}
-                            strokeWidth={2}
-                            stroke="rgb(71,149,77)"
-                            closed
-                            shadowBlur={0.2}
-                            shadowColor="rgb(71,149,77)"
-                            fill="rgba(71,149,77,0.009)"
                           />
 
                           <Circle
