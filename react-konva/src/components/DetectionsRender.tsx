@@ -46,7 +46,7 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                       y={detectionPoints[1] - 20}
                       text={detectionLabel}
                       fontSize={20}
-                      stroke="rgb(30,234,8)"
+                      fill="rgb(30,234,8)"
                     />
                     <Line
                       points={[
