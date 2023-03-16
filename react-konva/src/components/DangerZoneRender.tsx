@@ -8,8 +8,6 @@ interface Props {
 }
 
 export const DangerZoneRender: FC<Props> = ({ dangerZonesCoordinatesOne }) => {
-  console.log(dangerZonesCoordinatesOne, 'dangerZonesCoordinatesOne');
-
   const dangerzonesColor = 'rgba(49,32,128,0.6)';
 
   function getMultipliedOfPostions(

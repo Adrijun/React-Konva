@@ -24,3 +24,11 @@ export const getDangerZoneCoordinates = async () => {
     .catch(error => error.response);
   return response;
 };
+
+export const getDetections = async () => {
+  const response = await request
+    .get('/detections')
+    .then(res => res)
+    .catch(error => error.response);
+  return response;
+};
