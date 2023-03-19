@@ -1,4 +1,4 @@
-import { Image, Layer, Stage, Group } from 'react-konva';
+import { Image, Layer, Stage } from 'react-konva';
 import useImage from 'use-image';
 import { DangerZoneRender } from './DangerZoneRender';
 import { PersonSkeletonRender } from './PersonSkeletonRender';
@@ -13,15 +13,15 @@ const construction_site = './image/anonym2.jpg';
 // Använd props för att skicka APi till Dangerzone render och Person SKeletonrender
 export function StageRender() {
   const [image] = useImage(construction_site);
-  const [data, setData] = useState<Array<IKeypoints>>();
+  const [keyPointsData, setData] = useState<Array<IKeypoints>>();
   const [dangerZoneData, setDangerZoneData] = useState();
   const [detectionData, setDetectionData] = useState();
   useEffect(() => {
-    const subscribe = async () => {
+    const runKeyPoints = async () => {
       const allKeypoints = await getKeypoints();
       setData(allKeypoints.data);
     };
-    subscribe();
+    runKeyPoints();
   }, []);
 
   useEffect(() => {
@@ -44,19 +44,22 @@ export function StageRender() {
     <>
       <Stage height={window.innerHeight} width={window.innerWidth}>
         <Layer>
-          <Group>
-            <Image
-              image={image}
-              height={window.innerHeight}
-              width={window.innerWidth}
-            />
-          </Group>
+          <Image
+            image={image}
+            height={window.innerHeight}
+            width={window.innerWidth}
+          />
+
           {dangerZoneData && (
-            <DangerZoneRender dangerZonesCoordinatesOne={dangerZoneData} />
+            <DangerZoneRender dangerZonesCoordinates={dangerZoneData} />
+          )}
+
+          {keyPointsData && <PersonSkeletonRender keypoints={keyPointsData} />}
+
+          {detectionData && (
+            <DetectionsRender detections={detectionData} groups />
           )}
         </Layer>
-        {data && <PersonSkeletonRender keypoints={data} />}
-        {detectionData && <DetectionsRender detections={detectionData} />}
       </Stage>
     </>
   );
