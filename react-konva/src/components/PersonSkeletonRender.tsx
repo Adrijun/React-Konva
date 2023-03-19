@@ -1,5 +1,5 @@
 import { FC, Key } from 'react';
-import { Circle, Layer, Line } from 'react-konva';
+import { Circle, Line } from 'react-konva';
 import { IKeypoints } from '../Models/IKeypoints';
 interface Props {
   keypoints: Array<IKeypoints>;
@@ -290,63 +290,61 @@ export const PersonSkeletonRender: FC<Props> = ({ keypoints }) => {
         ];
         return (
           <>
-            <Layer>
-              {connectSkeleton.map(
-                (Skeleton: {
-                  coordinates: any[];
-                  name: Key | null | undefined;
-                }) => {
-                  const skeletonLine = Skeleton.coordinates.map(
-                    (coordinate: {
-                      x1: number;
-                      y1: number;
-                      x: number;
-                      y: number;
-                      colorSkeletonLines: string | CanvasGradient | undefined;
-                      colorDotOne: string | undefined;
-                      colorDotTwo: string | undefined;
-                    }) => {
-                      const x1 = coordinate.x1 * window.innerWidth;
-                      const y1 = coordinate.y1 * window.innerHeight;
-                      const x = coordinate.x * window.innerWidth;
-                      const y = coordinate.y * window.innerHeight;
-                      if (
-                        x1 === null ||
-                        y1 === null ||
-                        x === null ||
-                        y === null
-                      ) {
-                        return null;
-                      }
-                      return (
-                        <>
-                          <Line
-                            key={Skeleton.name}
-                            points={[x, y, x1, y1]}
-                            strokeWidth={2}
-                            stroke={coordinate.colorSkeletonLines}
-                          />
-
-                          <Circle
-                            x={x}
-                            y={y}
-                            radius={4}
-                            fill={coordinate.colorDotOne}
-                          />
-                          <Circle
-                            x={x1}
-                            y={y1}
-                            radius={4}
-                            fill={coordinate.colorDotTwo}
-                          />
-                        </>
-                      );
+            {connectSkeleton.map(
+              (Skeleton: {
+                coordinates: any[];
+                name: Key | null | undefined;
+              }) => {
+                const skeletonLine = Skeleton.coordinates.map(
+                  (coordinate: {
+                    x1: number;
+                    y1: number;
+                    x: number;
+                    y: number;
+                    colorSkeletonLines: string | CanvasGradient | undefined;
+                    colorDotOne: string | undefined;
+                    colorDotTwo: string | undefined;
+                  }) => {
+                    const x1 = coordinate.x1 * window.innerWidth;
+                    const y1 = coordinate.y1 * window.innerHeight;
+                    const x = coordinate.x * window.innerWidth;
+                    const y = coordinate.y * window.innerHeight;
+                    if (
+                      x1 === null ||
+                      y1 === null ||
+                      x === null ||
+                      y === null
+                    ) {
+                      return null;
                     }
-                  );
-                  return <>{skeletonLine}</>;
-                }
-              )}
-            </Layer>
+                    return (
+                      <>
+                        <Line
+                          key={Skeleton.name}
+                          points={[x, y, x1, y1]}
+                          strokeWidth={2}
+                          stroke={coordinate.colorSkeletonLines}
+                        />
+
+                        <Circle
+                          x={x}
+                          y={y}
+                          radius={4}
+                          fill={coordinate.colorDotOne}
+                        />
+                        <Circle
+                          x={x1}
+                          y={y1}
+                          radius={4}
+                          fill={coordinate.colorDotTwo}
+                        />
+                      </>
+                    );
+                  }
+                );
+                return <>{skeletonLine}</>;
+              }
+            )}
           </>
         );
       })}

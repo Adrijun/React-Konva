@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import { Layer, Line, Text } from 'react-konva';
+import { Line, Text } from 'react-konva';
 interface Props {
   detections: Array<[]>;
+  groups: any;
 }
 
 export const DetectionsRender: FC<Props> = ({ detections }) => {
@@ -40,32 +41,30 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
             <>
               {
                 <>
-                  <Layer>
-                    <Text
-                      x={detectionPoints[0]}
-                      y={detectionPoints[1] - 20}
-                      text={detectionLabel}
-                      fontSize={20}
-                      fill="rgb(30,234,8)"
-                    />
-                    <Line
-                      points={[
-                        detectionPoints[0],
-                        detectionPoints[1],
-                        detectionPoints[2],
-                        detectionPoints[1],
-                        detectionPoints[2],
-                        detectionPoints[3],
-                        detectionPoints[0],
-                        detectionPoints[3],
-                      ]}
-                      closed
-                      strokeWidth={1}
-                      stroke="rgb(30,234,8)"
-                      shadowBlur={1}
-                      shadowColor="rgb(30,234,8)"
-                    ></Line>
-                  </Layer>
+                  <Text
+                    x={detectionPoints[0]}
+                    y={detectionPoints[1] - 20}
+                    text={detectionLabel}
+                    fontSize={20}
+                    fill="rgb(30,234,8)"
+                  />
+                  <Line
+                    points={[
+                      detectionPoints[0],
+                      detectionPoints[1],
+                      detectionPoints[2],
+                      detectionPoints[1],
+                      detectionPoints[2],
+                      detectionPoints[3],
+                      detectionPoints[0],
+                      detectionPoints[3],
+                    ]}
+                    closed
+                    strokeWidth={1}
+                    stroke="rgb(30,234,8)"
+                    shadowBlur={1}
+                    shadowColor="rgb(30,234,8)"
+                  ></Line>
                 </>
               }
             </>

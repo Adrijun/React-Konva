@@ -1,13 +1,12 @@
 import React, { FC } from 'react';
 import { Line } from 'react-konva';
-import { IDangerZonesCoordinates } from '../Models/IDangerZonesCoordinates';
 
 import '../scss/dangerzonerender.scss';
 interface Props {
-  dangerZonesCoordinatesOne: any;
+  dangerZonesCoordinates: any;
 }
 
-export const DangerZoneRender: FC<Props> = ({ dangerZonesCoordinatesOne }) => {
+export const DangerZoneRender: FC<Props> = ({ dangerZonesCoordinates }) => {
   const dangerzonesColor = 'rgba(49,32,128,0.6)';
 
   function getMultipliedOfPostions(
@@ -19,7 +18,7 @@ export const DangerZoneRender: FC<Props> = ({ dangerZonesCoordinatesOne }) => {
 
   return (
     <>
-      {dangerZonesCoordinatesOne.map((dangerZonesArrays: any[]) => {
+      {dangerZonesCoordinates.map((dangerZonesArrays: any[]) => {
         // flattened  points are  not normalized coordinates
         return dangerZonesArrays.map(dangerzone => {
           const flattenedPoints = dangerzone.reduce(
