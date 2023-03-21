@@ -16,3 +16,7 @@ With this function it will now render an image completely anonymously and GDPR c
 
 # Used Technologies
 Built with React library using TypeScript and React-Konva
+
+Im using JSON server to get the data from the axios call  
+https://www.npmjs.com/package/json-server
+
