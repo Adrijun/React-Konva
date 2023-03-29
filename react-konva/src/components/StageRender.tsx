@@ -7,7 +7,8 @@ import { IKeypoints } from '../Models/IKeypoints';
 import { getDetections, getKeypoints } from '../apis/apirequest';
 import { getDangerZoneCoordinates } from '../apis/apirequest';
 import { DetectionsRender } from './DetectionsRender';
-const construction_site = './image/anonym2.jpg';
+
+const construction_site = './image/construction_site.jpg';
 
 // Useeffect för api
 // Använd props för att skicka APi till Dangerzone render och Person SKeletonrender
@@ -54,11 +55,10 @@ export function StageRender() {
             <DangerZoneRender dangerZonesCoordinates={dangerZoneData} />
           )}
 
-          {keyPointsData && <PersonSkeletonRender keypoints={keyPointsData} />}
-
           {detectionData && (
             <DetectionsRender detections={detectionData} groups />
           )}
+          {keyPointsData && <PersonSkeletonRender keypoints={keyPointsData} />}
         </Layer>
       </Stage>
     </>

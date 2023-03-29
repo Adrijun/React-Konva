@@ -1,3 +1,4 @@
+import Konva from 'konva';
 import { FC, Key } from 'react';
 import { Circle, Line } from 'react-konva';
 import { IKeypoints } from '../Models/IKeypoints';
