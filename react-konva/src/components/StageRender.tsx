@@ -8,8 +8,12 @@ import { getDetections, getKeypoints } from '../apis/apirequest';
 import { getDangerZoneCoordinates } from '../apis/apirequest';
 import { DetectionsRender } from './DetectionsRender';
 import { ImageRender } from './ImageRender';
+import BlurImageTool from './BlurImageTool';
+import React from 'react';
 
-const construction_site = './image/construction_site.jpg';
+const imageElement = document.createElement('img');
+imageElement.crossOrigin = 'anonymous';
+imageElement.src = './image/construction_site.jpg';
 
 // Useeffect för api
 // Använd props för att skicka APi till Dangerzone render och Person SKeletonrender
@@ -51,11 +55,10 @@ export function StageRender() {
             height={window.innerHeight}
             width={window.innerWidth}
           /> */}
-
+          <BlurImageTool imageElement={imageElement} />;
           {dangerZoneData && (
             <DangerZoneRender dangerZonesCoordinates={dangerZoneData} />
           )}
-
           {detectionData && (
             <DetectionsRender detections={detectionData} groups />
           )}

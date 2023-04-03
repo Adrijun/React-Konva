@@ -1,4 +1,5 @@
 import Konva from 'konva';
+import React from 'react';
 import { FC, useEffect, useRef } from 'react';
 import { Line, Text } from 'react-konva';
 import useImage from 'use-image';
@@ -17,6 +18,7 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
       imageRef.current.cache();
     }
   }, [imageRef]);
+
   function getMultipliedOfPostions(
     coordinatesValue: number,
     heightWidthValue: number
@@ -70,14 +72,35 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                       detectionPoints[3],
                     ]}
                     closed
-                    strokeWidth={1}
+                    strokeWidth={4}
+                    ref={imageRef}
                     stroke="rgb(30,234,8)"
                     shadowBlur={1}
                     shadowColor="rgb(30,234,8)"
+                  ></Line>
+                  <Line
+                    points={[
+                      detectionPoints[0],
+                      detectionPoints[1],
+                      detectionPoints[2],
+                      detectionPoints[1],
+                      detectionPoints[2],
+                      detectionPoints[3],
+                      detectionPoints[0],
+                      detectionPoints[3],
+                    ]}
+                    closed
+                    strokeWidth={1}
                     ref={imageRef}
-                    fill="transparent"
-                    filters={[Konva.Filters.Blur]}
-                    blurRadius={10}
+                    filters={[
+                      Konva.Filters.Noise,
+                      Konva.Filters.Pixelate,
+                      Konva.Filters.Blur,
+                    ]}
+                    blurRadius={50}
+                    noise={0.9}
+                    pixelSize={30}
+                    fill="rgba(255,255,255,0.9)"
                   ></Line>
                 </>
               }
