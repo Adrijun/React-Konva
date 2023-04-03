@@ -2,18 +2,19 @@ import Konva from 'konva';
 import '../scss/detectionsrender.scss';
 import { FC, useEffect, useRef } from 'react';
 import { Line, Text } from 'react-konva';
+import React from 'react';
 interface Props {
   detections: Array<[]>;
   groups: any;
 }
 export const DetectionsRender: FC<Props> = ({ detections }) => {
-  const ref = useRef<any>();
+  const blurRef = useRef<any>(null);
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.cache({ offset: 10 });
+    if (blurRef.current) {
+      blurRef.current.cache({ offset: 10 });
     }
-  }, [ref]);
+  }, [blurRef]);
 
   function getMultipliedOfPostions(
     coordinatesValue: number,
@@ -58,7 +59,7 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                     fill="rgb(30,234,8)"
                   />
                   <Line
-                    id="LineOne"
+                    ref={blurRef}
                     points={[
                       detectionPoints[0],
                       detectionPoints[1],
@@ -69,17 +70,20 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                       detectionPoints[0],
                       detectionPoints[3],
                     ]}
-                    ref={ref}
-                    filters={[
-                      Konva.Filters.Noise,
-                      Konva.Filters.Pixelate,
-                      Konva.Filters.Blur,
-                    ]}
-                    noise={5}
-                    radiusBlur={30}
-                    pixelSize={10}
-                    fill="rgba(0,0,0, 0.9)"
                     closed
+                    filters={[Konva.Filters.Blur, Konva.Filters.Pixelate]}
+                    fillLinearGradientStartPoint={{
+                      x: detectionPoints[0],
+                      y: detectionPoints[1],
+                    }}
+                    fillLinearGradientEndPoint={{
+                      x: detectionPoints[2],
+                      y: detectionPoints[3],
+                    }}
+                    fillLinearGradientColorStops={[0, 'white', 1, 'black']}
+                    opacity={0.9}
+                    blurRadius={5}
+                    pixelSize={5}
                   ></Line>
                   <Line
                     points={[
