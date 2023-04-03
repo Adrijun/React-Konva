@@ -1,3 +1,4 @@
+import React from 'react';
 import { Image, Layer, Stage } from 'react-konva';
 import useImage from 'use-image';
 import { DangerZoneRender } from './DangerZoneRender';

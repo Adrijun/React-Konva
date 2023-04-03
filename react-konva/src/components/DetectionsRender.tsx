@@ -72,18 +72,10 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                     ]}
                     closed
                     filters={[Konva.Filters.Blur, Konva.Filters.Pixelate]}
-                    fillLinearGradientStartPoint={{
-                      x: detectionPoints[0],
-                      y: detectionPoints[1],
-                    }}
-                    fillLinearGradientEndPoint={{
-                      x: detectionPoints[2],
-                      y: detectionPoints[3],
-                    }}
-                    fillLinearGradientColorStops={[0, 'white', 1, 'black']}
+                    fill={'rgb(255,255,255 )'}
                     opacity={0.9}
-                    blurRadius={5}
-                    pixelSize={5}
+                    blurRadius={50}
+                    pixelSize={10}
                   ></Line>
                   <Line
                     points={[
