@@ -7,17 +7,7 @@ interface Props {
   detections: Array<[]>;
   groups: any;
 }
-export const DetectionsRender: FC<Props> = ({ detections }) => {
-  const imageRef: any = React.useRef();
-
-  // when image is loaded we need to cache the shape
-  React.useEffect(() => {
-    if (Image) {
-      // you many need to reapply cache on some props changes like shadow, stroke, etc.
-      imageRef.current.cache();
-    }
-  }, []);
-
+export const BlurLine: FC<Props> = ({ detections }) => {
   function getMultipliedOfPostions(
     coordinatesValue: number,
     heightWidthValue: number
@@ -75,12 +65,12 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                     closed
                     strokeWidth={4}
                     stroke="rgb(30,234,8)"
-                    ref={imageRef}
                     shadowBlur={1}
                     // shadowColor="rgb(30,234,8)"
                     filters={[Konva.Filters.Pixelate, Konva.Filters.Noise]}
                     pixelSize={500}
                     noise={1}
+                    fill="rgba(100,100,100, 0.5)"
                   ></Line>
                   <Line
                     points={[
@@ -112,3 +102,5 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
     </>
   );
 };
+
+export default BlurLine;
