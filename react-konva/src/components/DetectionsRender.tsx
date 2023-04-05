@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import '../scss/detectionsrender.scss';
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { Line, Text } from 'react-konva';
 import React from 'react';
 interface Props {
@@ -11,12 +11,13 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
   const imageRef: any = React.useRef();
 
   // when image is loaded we need to cache the shape
-  React.useEffect(() => {
-    if (Image) {
-      // you many need to reapply cache on some props changes like shadow, stroke, etc.
-      imageRef.current.cache();
+  const blurRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (blurRef.current) {
+      blurRef.current.cache({ offset: 5 });
     }
-  }, []);
+  }, [blurRef]);
 
   function getMultipliedOfPostions(
     coordinatesValue: number,
@@ -75,12 +76,8 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                     closed
                     strokeWidth={4}
                     stroke="rgb(30,234,8)"
-                    ref={imageRef}
                     shadowBlur={1}
-                    // shadowColor="rgb(30,234,8)"
-                    filters={[Konva.Filters.Pixelate, Konva.Filters.Noise]}
-                    pixelSize={500}
-                    noise={1}
+                    shadowColor="rgb(30,234,8)"
                   ></Line>
                   <Line
                     points={[
@@ -94,14 +91,13 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                       detectionPoints[3],
                     ]}
                     closed
+                    ref={blurRef}
                     strokeWidth={4}
-                    stroke="rgb(30,234,8)"
-                    shadowBlur={1}
-                    // shadowColor="rgb(30,234,8)"
-                    filters={[Konva.Filters.Pixelate, Konva.Filters.Noise]}
-                    pixelSize={500}
-                    noise={1}
-                    fill="rgba(100,100,100, 0.5)"
+                    filters={[Konva.Filters.Blur, Konva.Filters.Pixelate]}
+                    blurRadius={100}
+                    pixelSize={5}
+                    fill="rgba(0,0,0"
+                    opacity={0.9}
                   ></Line>
                 </>
               }

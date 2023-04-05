@@ -54,10 +54,10 @@ export function StageRender() {
           {dangerZoneData && (
             <DangerZoneRender dangerZonesCoordinates={dangerZoneData} />
           )}
+          {detectionData && <BlurLine detections={detectionData} groups />}
           {detectionData && (
             <DetectionsRender detections={detectionData} groups />
           )}
-          {detectionData && <BlurLine detections={detectionData} groups />}
           {keyPointsData && <PersonSkeletonRender keypoints={keyPointsData} />}
         </Layer>
       </Stage>
