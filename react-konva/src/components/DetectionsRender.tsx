@@ -91,13 +91,6 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                       detectionPoints[3],
                     ]}
                     closed
-                    ref={blurRef}
-                    strokeWidth={4}
-                    filters={[Konva.Filters.Blur, Konva.Filters.Pixelate]}
-                    blurRadius={100}
-                    pixelSize={5}
-                    fill="rgba(0,0,0"
-                    opacity={0.9}
                   ></Line>
                 </>
               }

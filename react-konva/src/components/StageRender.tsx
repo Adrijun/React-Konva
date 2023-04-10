@@ -7,9 +7,8 @@ import { IKeypoints } from '../Models/IKeypoints';
 import { getDetections, getKeypoints } from '../apis/apirequest';
 import { getDangerZoneCoordinates } from '../apis/apirequest';
 import { DetectionsRender } from './DetectionsRender';
+import BlurImageTool from './BlurImageTool';
 
-import BlurLine from './BlurLine';
-import { ImageRender } from './ImageRender';
 const construction_site = './image/construction_site.jpg';
 const imageElement = document.createElement('img');
 imageElement.crossOrigin = 'anonymous';
@@ -49,12 +48,16 @@ export function StageRender() {
     <>
       <Stage height={window.innerHeight} width={window.innerWidth}>
         <Layer>
-          <ImageRender />
-
+          {detectionData && (
+            <BlurImageTool
+              imageElement={imageElement}
+              detections={detectionData}
+            />
+          )}
           {dangerZoneData && (
             <DangerZoneRender dangerZonesCoordinates={dangerZoneData} />
           )}
-          {detectionData && <BlurLine detections={detectionData} groups />}
+
           {detectionData && (
             <DetectionsRender detections={detectionData} groups />
           )}
