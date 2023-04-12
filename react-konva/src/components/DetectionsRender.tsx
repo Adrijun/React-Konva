@@ -1,6 +1,5 @@
-import Konva from 'konva';
 import '../scss/detectionsrender.scss';
-import { FC, useEffect, useRef } from 'react';
+import { FC } from 'react';
 import { Line, Text } from 'react-konva';
 import React from 'react';
 interface Props {
@@ -8,17 +7,6 @@ interface Props {
   groups: any;
 }
 export const DetectionsRender: FC<Props> = ({ detections }) => {
-  const imageRef: any = React.useRef();
-
-  // when image is loaded we need to cache the shape
-  const blurRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (blurRef.current) {
-      blurRef.current.cache({ offset: 5 });
-    }
-  }, [blurRef]);
-
   function getMultipliedOfPostions(
     coordinatesValue: number,
     heightWidthValue: number
@@ -32,7 +20,6 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
         // flattened  points are  not normalized coordinates
         return detectionsArrays.map(detectionZone => {
           const detectionLabel = detectionZone[5];
-          console.log(detectionLabel, 'detectionLabel');
 
           const flattenedPoints = detectionZone.reduce(
             (a: string | any[], b: any) => a.concat(b),
@@ -78,19 +65,6 @@ export const DetectionsRender: FC<Props> = ({ detections }) => {
                     stroke="rgb(30,234,8)"
                     shadowBlur={1}
                     shadowColor="rgb(30,234,8)"
-                  ></Line>
-                  <Line
-                    points={[
-                      detectionPoints[0],
-                      detectionPoints[1],
-                      detectionPoints[2],
-                      detectionPoints[1],
-                      detectionPoints[2],
-                      detectionPoints[3],
-                      detectionPoints[0],
-                      detectionPoints[3],
-                    ]}
-                    closed
                   ></Line>
                 </>
               }

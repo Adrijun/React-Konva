@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import React, { useEffect, useRef } from 'react';
-import { Transformer, Image, Line } from 'react-konva';
+import { Transformer, Image } from 'react-konva';
 
 export type Shape = {
   id: string;
@@ -27,7 +27,7 @@ const BlurImageToolShape = ({
   //   onChange,
   imageElement,
 }: BlurImageToolShapeProps) => {
-  const shapeRef: any = useRef<Konva.Rect>(null);
+  const shapeRef: any = useRef<Konva.Line>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
 
   useEffect(() => {
@@ -55,42 +55,10 @@ const BlurImageToolShape = ({
         cropY={shape.y}
         cropWidth={shape.width}
         cropHeight={shape.height}
-        // draggable
-        // onDblClick={onRemove}
-        // onDragStart={onSelect}
-
         filters={[Konva.Filters.Blur]}
-        blurRadius={30}
-        // onDragEnd={e => {
-        //   onChange({
-        //     ...shape,
-        //     x: e.target.x(),
-        //     y: e.target.y(),
-        //   });
-        // }}
-        // onTransformEnd={e => {
-        //   // transformer is changing scale of the node
-        //   // and NOT its width or height
-        //   // but in the store we have only width and height
-        //   // to match the data better we will reset scale on transform end
-        //   const node = shapeRef.current!;
-        //   const scaleX = node.scaleX();
-        //   const scaleY = node.scaleY();
-
-        //   // we will reset it back
-        //   //   node.scaleX(1);
-        //   //   node.scaleY(1);
-        //   //   onChange({
-        //   //     ...shape,
-        //   //     x: node.x(),
-        //   //     y: node.y(),
-        //   //     // set minimal value
-        //   //     width: Math.max(5, node.width() * scaleX),
-        //   //     height: Math.max(node.height() * scaleY),
-        //   //   });
-        // }}
+        blurRadius={25}
       />
-      {/* {isSelected && ( */}
+
       <Transformer
         ref={transformerRef}
         boundBoxFunc={(oldBox, newBox) => {

@@ -1,4 +1,4 @@
-import { KonvaEventObject } from 'konva/lib/Node';
+// import { KonvaEventObject } from 'konva/lib/Node';
 import React, { useState, useEffect } from 'react';
 import { Image } from 'react-konva';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,84 +10,67 @@ export interface BlurImageToolProps {
   detections: Array<[]>;
 }
 
-const BlurImageTool = ({ imageElement }: BlurImageToolProps) => {
-  //   const containerRef = useRef<HTMLDivElement>(null);
-  //   const stageRef = React.useRef<Konva.Stage>(null);
+const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
   const [shapes, setShapes] = useState<Shape[]>([]);
-  const [draggingShape, setDraggingShape] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
     handleAddMask();
   }, []);
 
+  function getMultipliedOfPostions(
+    coordinatesValue: number,
+    heightWidthValue: number
+  ) {
+    return coordinatesValue * heightWidthValue;
+  }
+
   function handleAddMask() {
-    const _shapes = shapes.slice();
-    const id = uuidv4; // or you can remove the id property altogether
-    _shapes.push({
-      id: id(),
-      x: 380,
-      y: 550,
-      width: 150,
-      height: 400,
+    const newShapes: Shape[] = [];
+    detections.forEach((detectionsArrays: any[]) => {
+      detectionsArrays.forEach(detectionZone => {
+        const flattenedPoints = detectionZone.reduce(
+          (a: string | any[], b: any) => a.concat(b),
+          []
+        );
+
+        const detectionPoints = flattenedPoints.map(
+          (value: number, index: number) => {
+            if (index % 2) {
+              return getMultipliedOfPostions(value, window.innerHeight);
+            }
+            return getMultipliedOfPostions(value, window.innerWidth);
+          }
+        );
+        // Brings out the width and height of the blur effect
+        const coord1 = { x: detectionPoints[0], y: detectionPoints[1] };
+        const coord2 = { x: detectionPoints[2], y: detectionPoints[1] };
+        const blurWidth = Math.sqrt(
+          Math.pow(coord2.x - coord1.x, 2) + Math.pow(coord2.y - coord1.y, 2)
+        );
+        const coord3 = { x: detectionPoints[2], y: detectionPoints[1] };
+        const coord4 = { x: detectionPoints[2], y: detectionPoints[3] };
+        const blurHeight = Math.sqrt(
+          Math.pow(coord4.x - coord3.x, 2) + Math.pow(coord4.y - coord3.y, 2)
+        );
+
+        const id = uuidv4();
+        newShapes.push({
+          id: id,
+          x: detectionPoints[0],
+          y: detectionPoints[1],
+          width: blurWidth + 3,
+          height: blurHeight,
+        });
+        console.log(newShapes, 'newShapes');
+      });
     });
-    setShapes(_shapes);
-    console.log(_shapes, 'shapes');
-    return id;
+    setShapes(newShapes);
   }
 
   function selectShape(id: string | null) {
-    console.log('select', id);
-
     setSelectedId(id);
-
-    if (!id) {
-      return;
-    }
-
-    // Place selected shape at the top.
-    const _shapes = [...shapes];
-    const index = _shapes.findIndex(shape => shape.id === id);
-    if (index > -1) {
-      const shape = _shapes[index];
-      _shapes.splice(index, 1);
-      _shapes.push(shape);
-      setShapes(_shapes);
-    }
   }
-
-  const handleDragMove = (e: KonvaEventObject<MouseEvent>) => {
-    if (!draggingShape) {
-      return;
-    }
-
-    const xvärde: number = 0;
-    const yvärde: number = 10;
-
-    const _shapes = [...shapes];
-    const shape = _shapes[_shapes.length - 1];
-    shape.width = xvärde - shape.x;
-    shape.height = yvärde - shape.y;
-    setShapes(_shapes);
-  };
-
-  const handleDragEnd = (e: KonvaEventObject<MouseEvent>) => {
-    if (!draggingShape) {
-      return;
-    }
-
-    // Remove mask if it's too tiny.
-    const _shapes = [...shapes];
-    const shape = _shapes[_shapes.length - 1];
-    if (Math.abs(shape.width) < 5 && Math.abs(shape.height) < 5) {
-      _shapes.pop();
-      setShapes(_shapes);
-    } else {
-      selectShape(draggingShape);
-    }
-
-    setDraggingShape(null);
-  };
 
   return (
     <>

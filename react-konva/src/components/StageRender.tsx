@@ -2,12 +2,13 @@ import React from 'react';
 import { Layer, Stage } from 'react-konva';
 import { DangerZoneRender } from './DangerZoneRender';
 import { PersonSkeletonRender } from './PersonSkeletonRender';
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { IKeypoints } from '../Models/IKeypoints';
 import { getDetections, getKeypoints } from '../apis/apirequest';
 import { getDangerZoneCoordinates } from '../apis/apirequest';
 import { DetectionsRender } from './DetectionsRender';
 import BlurImageTool from './BlurImageTool';
+import Konva from 'konva';
 
 const construction_site = './image/construction_site.jpg';
 const imageElement = document.createElement('img');
@@ -20,6 +21,8 @@ export function StageRender() {
   const [keyPointsData, setData] = useState<Array<IKeypoints>>();
   const [dangerZoneData, setDangerZoneData] = useState();
   const [detectionData, setDetectionData] = useState();
+  const stageRef = useRef<Konva.Stage>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   useEffect(() => {
     const runKeyPoints = async () => {
       const allKeypoints = await getKeypoints();
@@ -46,24 +49,32 @@ export function StageRender() {
 
   return (
     <>
-      <Stage height={window.innerHeight} width={window.innerWidth}>
-        <Layer>
-          {detectionData && (
-            <BlurImageTool
-              imageElement={imageElement}
-              detections={detectionData}
-            />
-          )}
-          {dangerZoneData && (
-            <DangerZoneRender dangerZonesCoordinates={dangerZoneData} />
-          )}
+      <div ref={containerRef}>
+        <Stage
+          height={window.innerHeight}
+          width={window.innerWidth}
+          ref={stageRef}
+        >
+          <Layer>
+            {detectionData && (
+              <BlurImageTool
+                imageElement={imageElement}
+                detections={detectionData}
+              />
+            )}
+            {dangerZoneData && (
+              <DangerZoneRender dangerZonesCoordinates={dangerZoneData} />
+            )}
 
-          {detectionData && (
-            <DetectionsRender detections={detectionData} groups />
-          )}
-          {keyPointsData && <PersonSkeletonRender keypoints={keyPointsData} />}
-        </Layer>
-      </Stage>
+            {detectionData && (
+              <DetectionsRender detections={detectionData} groups />
+            )}
+            {keyPointsData && (
+              <PersonSkeletonRender keypoints={keyPointsData} />
+            )}
+          </Layer>
+        </Stage>
+      </div>
     </>
   );
 }
