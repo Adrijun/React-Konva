@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Image } from 'react-konva';
 import { v4 as uuidv4 } from 'uuid';
 
-import BlurShape, { Shape } from './BlurShape';
+import BlurShape, { Shapes } from './BlurShape';
 
 export interface BlurImageToolProps {
   imageElement?: HTMLImageElement;
@@ -11,8 +11,8 @@ export interface BlurImageToolProps {
 }
 
 const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
-  const [shapes, setShapes] = useState<Shape[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [shapes, setShapes] = useState<Shapes[]>([]);
+  // const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
     handleAddMask();
@@ -26,7 +26,7 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
   }
 
   function handleAddMask() {
-    const newShapes: Shape[] = [];
+    const newShapes: Shapes[] = [];
     detections.forEach((detectionsArrays: any[]) => {
       detectionsArrays.forEach(detectionZone => {
         const flattenedPoints = detectionZone.reduce(
@@ -42,7 +42,7 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
             return getMultipliedOfPostions(value, window.innerWidth);
           }
         );
-        // Brings out the width and height of the blur effect
+        // Creates the width and height of the blur effect
         const coord1 = { x: detectionPoints[0], y: detectionPoints[1] };
         const coord2 = { x: detectionPoints[2], y: detectionPoints[1] };
         const blurWidth = Math.sqrt(
@@ -68,10 +68,6 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
     setShapes(newShapes);
   }
 
-  function selectShape(id: string | null) {
-    setSelectedId(id);
-  }
-
   return (
     <>
       <Image
@@ -81,13 +77,7 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
       />
       {shapes.map((shape, i) => {
         return (
-          <BlurShape
-            key={shape.id}
-            shape={shape}
-            imageElement={imageElement}
-            isSelected={shape.id === selectedId}
-            onSelect={() => selectShape(shape.id)}
-          />
+          <BlurShape key={shape.id} shape={shape} imageElement={imageElement} />
         );
       })}
     </>
