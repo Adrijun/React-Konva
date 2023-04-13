@@ -1,8 +1,8 @@
 import Konva from 'konva';
 import React, { useEffect, useRef } from 'react';
-import { Transformer, Image } from 'react-konva';
+import { Image } from 'react-konva';
 
-export type Shape = {
+export type Shapes = {
   id: string;
   x: number;
   y: number;
@@ -11,65 +11,43 @@ export type Shape = {
 };
 
 interface BlurImageToolShapeProps {
-  shape: Shape;
-  isSelected: boolean;
-  //   onRemove: () => void;
-  onSelect: () => void;
-  //   onChange: (value: Shape) => void;
+  shape: Shapes;
+
   imageElement?: HTMLImageElement;
 }
 
 const BlurImageToolShape = ({
   shape,
-  isSelected,
-  //   onRemove,
-  //   onSelect,
-  //   onChange,
   imageElement,
 }: BlurImageToolShapeProps) => {
-  const shapeRef: any = useRef<Konva.Line>(null);
-  const transformerRef = useRef<Konva.Transformer>(null);
+  const blurRef = useRef<Konva.Image>(null);
 
   useEffect(() => {
-    if (isSelected && shapeRef.current && transformerRef.current) {
-      // we need to attach transformer manually
-      transformerRef.current.nodes([shapeRef.current]);
-      transformerRef.current.getLayer()!.batchDraw();
+    if (blurRef.current) {
+      blurRef.current.cache();
     }
-  }, [isSelected]);
-
-  React.useEffect(() => {
-    shapeRef.current.cache();
   });
+
+  const { x, y, width, height } = shape;
+  const scaleX = imageElement ? imageElement.width / window.innerWidth : 1;
+  const scaleY = imageElement ? imageElement.height / window.innerHeight : 1;
 
   return (
     <>
       <Image
-        // onClick={onSelect}
-        // onTap={onSelect}
-        ref={shapeRef}
-        {...shape}
-        fill="black"
+        ref={blurRef}
+        x={x}
+        y={y}
+        width={width}
+        height={height}
         image={imageElement}
-        cropX={shape.x}
-        cropY={shape.y}
-        cropWidth={shape.width}
-        cropHeight={shape.height}
+        cropX={x * scaleX}
+        cropY={y * scaleY}
+        cropWidth={width * scaleX}
+        cropHeight={height * scaleY}
         filters={[Konva.Filters.Blur]}
-        blurRadius={25}
-      />
-
-      <Transformer
-        ref={transformerRef}
-        boundBoxFunc={(oldBox, newBox) => {
-          // limit resize
-          if (newBox.width < 5 || newBox.height < 5) {
-            return oldBox;
-          }
-          return newBox;
-        }}
-        rotateEnabled={false}
-        keepRatio={false}
+        blurRadius={20}
+        fill="black"
       />
     </>
   );
