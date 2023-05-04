@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image } from 'react-konva';
 
 export type Shapes = {
@@ -13,7 +13,7 @@ export type Shapes = {
 interface BlurImageToolShapeProps {
   shape: Shapes;
 
-  imageElement?: HTMLImageElement;
+  imageElement: HTMLImageElement;
 }
 
 const BlurImageToolShape = ({
@@ -28,7 +28,7 @@ const BlurImageToolShape = ({
     }
   });
 
-  const { x, y, width, height } = shape;
+  // These two lines of code calculate the scaling factors that need to be applied to the blurred image shape to match the size and position of the original image
   const scaleX = imageElement ? imageElement.width / window.innerWidth : 1;
   const scaleY = imageElement ? imageElement.height / window.innerHeight : 1;
 
@@ -36,15 +36,15 @@ const BlurImageToolShape = ({
     <>
       <Image
         ref={blurRef}
-        x={x}
-        y={y}
-        width={width}
-        height={height}
+        x={shape.x}
+        y={shape.y}
+        width={shape.width}
+        height={shape.height}
         image={imageElement}
-        cropX={x * scaleX}
-        cropY={y * scaleY}
-        cropWidth={width * scaleX}
-        cropHeight={height * scaleY}
+        cropX={shape.x * scaleX}
+        cropY={shape.y * scaleY}
+        cropWidth={shape.width * scaleX}
+        cropHeight={shape.height * scaleY}
         filters={[Konva.Filters.Blur]}
         blurRadius={20}
         fill="black"

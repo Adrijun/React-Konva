@@ -6,17 +6,12 @@ import { v4 as uuidv4 } from 'uuid';
 import BlurShape, { Shapes } from './BlurShape';
 
 export interface BlurImageToolProps {
-  imageElement?: HTMLImageElement;
+  imageElement: HTMLImageElement;
   detections: Array<[]>;
 }
 
 const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
   const [shapes, setShapes] = useState<Shapes[]>([]);
-  // const [selectedId, setSelectedId] = useState<string | null>(null);
-
-  useEffect(() => {
-    handleAddMask();
-  }, []);
 
   function getMultipliedOfPostions(
     coordinatesValue: number,
@@ -67,6 +62,9 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
     });
     setShapes(newShapes);
   }
+  useEffect(() => {
+    handleAddMask();
+  }, []);
 
   return (
     <>
@@ -75,7 +73,7 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
         width={window.innerWidth}
         height={window.innerHeight}
       />
-      {shapes.map((shape, i) => {
+      {shapes.map(shape => {
         return (
           <BlurShape key={shape.id} shape={shape} imageElement={imageElement} />
         );

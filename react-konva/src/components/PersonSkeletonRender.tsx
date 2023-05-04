@@ -1,7 +1,8 @@
-import Konva from 'konva';
-import { FC, Key } from 'react';
+import React, { FC, Key } from 'react';
+
 import { Circle, Line } from 'react-konva';
 import { IKeypoints } from '../Models/IKeypoints';
+
 interface Props {
   keypoints: Array<IKeypoints>;
 }

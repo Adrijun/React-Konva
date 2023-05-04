@@ -1,12 +1,12 @@
 import React from 'react';
 import { Layer, Stage } from 'react-konva';
-import { DangerZoneRender } from './DangerZoneRender';
+import DangerZoneRender from './DangerZoneRender';
 import { PersonSkeletonRender } from './PersonSkeletonRender';
 import { useRef, useEffect, useState } from 'react';
 import { IKeypoints } from '../Models/IKeypoints';
 import { getDetections, getKeypoints } from '../apis/apirequest';
 import { getDangerZoneCoordinates } from '../apis/apirequest';
-import { DetectionsRender } from './DetectionsRender';
+import DetectionsRender from './DetectionsRender';
 import BlurImageTool from './BlurImageTool';
 import Konva from 'konva';
 
@@ -66,9 +66,7 @@ export function StageRender() {
               <DangerZoneRender dangerZonesCoordinates={dangerZoneData} />
             )}
 
-            {detectionData && (
-              <DetectionsRender detections={detectionData} groups />
-            )}
+            {detectionData && <DetectionsRender detections={detectionData} />}
             {keyPointsData && (
               <PersonSkeletonRender keypoints={keyPointsData} />
             )}
