@@ -7,12 +7,11 @@ import BlurShape, { Shapes } from './BlurShape';
 
 export interface BlurImageToolProps {
   imageElement: HTMLImageElement;
-  detections: Array<[]>;
+  data: (string | number)[][][];
 }
 
-const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
+const BlurImageTool = ({ imageElement, data }: BlurImageToolProps) => {
   const [shapes, setShapes] = useState<Shapes[]>([]);
-
   function getMultipliedOfPostions(
     coordinatesValue: number,
     heightWidthValue: number
@@ -22,7 +21,7 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
 
   function handleAddMask() {
     const newShapes: Shapes[] = [];
-    detections.forEach((detectionsArrays: any[]) => {
+    data.forEach((detectionsArrays: any[]) => {
       detectionsArrays.forEach(detectionZone => {
         const flattenedPoints = detectionZone.reduce(
           (a: string | any[], b: any) => a.concat(b),
@@ -57,7 +56,6 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
           width: blurWidth + 3,
           height: blurHeight,
         });
-        console.log(newShapes, 'newShapes');
       });
     });
     setShapes(newShapes);
@@ -68,12 +66,16 @@ const BlurImageTool = ({ imageElement, detections }: BlurImageToolProps) => {
 
   return (
     <>
-      <Image
-        image={imageElement}
-        width={window.innerWidth}
-        height={window.innerHeight}
-      />
+      {imageElement && (
+        <Image
+          image={imageElement}
+          width={window.innerWidth}
+          height={window.innerHeight}
+        />
+      )}
+
       {shapes.map(shape => {
+        console.log(shape, 'shapes');
         return (
           <BlurShape key={shape.id} shape={shape} imageElement={imageElement} />
         );

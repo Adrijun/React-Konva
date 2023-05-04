@@ -31,7 +31,6 @@ const BlurImageToolShape = ({
   // These two lines of code calculate the scaling factors that need to be applied to the blurred image shape to match the size and position of the original image
   const scaleX = imageElement ? imageElement.width / window.innerWidth : 1;
   const scaleY = imageElement ? imageElement.height / window.innerHeight : 1;
-
   return (
     <>
       <Image
@@ -46,7 +45,7 @@ const BlurImageToolShape = ({
         cropWidth={shape.width * scaleX}
         cropHeight={shape.height * scaleY}
         filters={[Konva.Filters.Blur]}
-        blurRadius={20}
+        blurRadius={30}
         fill="black"
       />
     </>
