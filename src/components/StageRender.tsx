@@ -10,11 +10,11 @@ import DetectionsRender from './DetectionsRender';
 import BlurImageTool from './BlurImageTool';
 import Konva from 'konva';
 import { Triangle } from 'react-loader-spinner';
+import constructionSite from './../images/construction_site.jpg';
 import dataResponse from './../apis/db.json'; // Används för demo
-const construction_site = './image/construction_site.jpg';
 const imageElement = document.createElement('img');
 imageElement.crossOrigin = 'anonymous';
-imageElement.src = construction_site;
+imageElement.src = constructionSite;
 
 // Använd props för att skicka APi till Dangerzone render och Person SKeletonrender
 export function StageRender() {

@@ -75,7 +75,6 @@ const BlurImageTool = ({ imageElement, data }: BlurImageToolProps) => {
       )}
 
       {shapes.map(shape => {
-        console.log(shape, 'shapes');
         return (
           <BlurShape key={shape.id} shape={shape} imageElement={imageElement} />
         );
