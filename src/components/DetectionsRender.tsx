@@ -94,7 +94,7 @@ const DetectionsRender: FC<Props> = function DetectionsRender({ detections }) {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 lineJoin="round"
-                tension={0.03}
+                tension={0.02}
               />
             </>
           );
