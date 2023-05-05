@@ -5,6 +5,7 @@ import { IKeypoints } from '../Models/IKeypoints';
 
 interface Props {
   keypoints: Array<IKeypoints>;
+  skeletons: number[][];
 }
 export const PersonSkeletonRender: FC<Props> = ({ keypoints }) => {
   const green = 'rgb(17,244,8)';

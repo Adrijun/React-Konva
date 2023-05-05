@@ -3,7 +3,8 @@ import { Line, Text } from 'react-konva';
 
 // This component renders a bounding box around the person skeleton
 interface Props {
-  detections: Array<[]>;
+  // detections: Array<[]>;
+  detections: (string | number)[][][];
 }
 
 const DetectionsRender: FC<Props> = function DetectionsRender({ detections }) {
