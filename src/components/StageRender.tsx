@@ -108,12 +108,12 @@ export function StageRender() {
                   {dataResponse && (
                     <DetectionsRender detections={dataResponse.detections} />
                   )}
-                  {/* {dataResponse && (
+                  {dataResponse && (
                     <PersonSkeletonRender
                       keypoints={dataResponse.keypoints}
                       skeletons={dataResponse.skeleton}
                     />
-                  )} */}
+                  )}
                 </Layer>
               </Stage>
             )}
